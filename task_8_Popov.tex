@@ -1,0 +1,259 @@
+\documentclass[a4paper,12pt]{article} % тип документа
+
+% report, book
+
+%  Русский язык
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+\usepackage[margin=0.5in]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+ 
+ % Цвета для гиперссылок
+\definecolor{linkcolor}{HTML}{799B03} % цвет ссылок
+\definecolor{urlcolor}{HTML}{799B03} % цвет гиперссылок
+ 
+\hypersetup{pdfstartview=FitH,  linkcolor=linkcolor,urlcolor=urlcolor, colorlinks=true}
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+
+
+\usepackage{wasysym}
+% мои добьавки-----------------------------------------
+\usepackage{ dsfont }
+\usepackage{listings}
+
+%мое----------------------------------------------------
+%Заговолок
+\author{Попов Николай}
+\title{Домашнее задание 1\LaTeX{}}
+
+%--------------------
+\usepackage{tikz}
+
+\begin{document}
+
+\section*{Задача 1}
+Посчитаем произведение матриц 
+\[
+A = \dfrac{1}{n}M_n(w)M_n(w^{-1})=\left[\sum_{k=0}^{n-1}{w_n^{ik}w_n^{-kj}}\right]_{i,j=0\cdots n-1} =
+\left[\sum_{k=0}^{n-1}{\left(w_n^{i-j}\right)^{k}}\right]_{i,j=0\cdots n-1} 
+\]
+Т.~к. $i$ и $j$ меньше $n$, то если $i = j$, то сумма равна $n$ (элемент на диагонали матрицы), иначе  
+она равна нулю по лемме 3 о сложении из файла Горбунова~Э. Тогда $A = I_n$ и формула для обратной матрицы верна. Теми же рассуждениями о сумме получаем
+
+\[
+[M_n^2(w)]_{ij}=\sum_{k=0}^{n-1}{w^{ik}w^{kj}}=\sum_{k=0}^{n-1}{\left(w^{i+j}\right)^k} = \begin{vmatrix}
+0,~if~(i+j)\neq 0~mod~n\\
+n,~if~(i+j)=0~mod~n\\
+\end{vmatrix} 
+\]
+
+\[
+M_n^2(w)=
+\begin{vmatrix}
+n&0&0&0&  \cdots&0&0&0&0\\
+0&0&0&0& \cdots&0&0&0&n\\
+0&0&0&0& \cdots&0&0&n&0\\
+0&0&0&0& \cdots&0&n&0&0\\
+0&0&0&0& \cdots&n&0&0&0\\
+\vdots&\vdots&\vdots&\vdots& \cdots&\vdots&\vdots&\vdots&\vdots\\
+0&0&0&n& \cdots&0&0&0&0\\
+0&0&n&0& \cdots&0&0&0&0\\
+0&n&0&0& \cdots&0&0&0&0\\
+\end{vmatrix}
+\]
+
+\[
+M_n^4(w)=\left(M_n^2(w)\right)^2=n^2I_n
+\]
+
+
+
+\section*{Задача 2}
+${y}_A$ обозначим вектор значений многочлена $A(x)$ и ${y}_B$ аналогично. \\
+$a_A = (2~3~0~1~0~0~0~0)$, $a_B = (2~0~3~3~0~0~0~0)$  ~---~ векторы их коэффициентов. При рекурсивном спуске вычисления произведения матрицы Вандермонда на вектор считаем размер метрицы 2 константой.\\
+$a_1=(2~0), a_2=(0~0), a_3= (3~0), a_4 =(1~0),$ \\
+$ b_1=(2~0), b_2=(3~0), b_3= (0~0), a_4 =(3~0$\\
+
+\noindent $M_2a_1=(2~2)^T$, $M_2a_2=(0~0)^T \Rightarrow$
+$M_4(2~0~0~0)^T=(2~2~2~2)^T$
+
+\noindent $M_2a_3=(3~3)^T$, $M_2a_4=(2~2)^T \Rightarrow$
+$M_4(3~1~0~0)^T=(3~3~3~3)^T + (1~i~-1~-i)^T= $ $=(4~3+i~2~3-i)^T$
+
+\noindent \[y_A=M_8(2~3~0~1~0~0~0~0)^T=
+(2~2~2~2~2~2~2~2)^T+\]\[+(4;~\frac{1}{\sqrt{2}}(3+i)(1+i);~2i;~\frac{1}{\sqrt{2}}(3-i)(i-1);~-4;~-\frac{1}{\sqrt{2}}(3+i)(1+i);~-2i;~-\frac{1}{\sqrt{2}}(3-i)(i-1))=\]
+\[=
+(6;~2+\sqrt{2}+2\sqrt{2}i;~2+2i;~2-\sqrt{2}+2\sqrt{2}i;~-2;~2-\sqrt{2}-2\sqrt{2}i;~2-2i;~2+\sqrt{2}-2\sqrt{2}i)\]\\
+По тем же правилам получаем для второго многочлена 
+\[
+y_B = M_8(2~0~3~3~0~0~0~0)^T=
+\]
+\[
+(8;~
+2-3/\sqrt{2}+3i+3i/\sqrt{2};~
+-1-3i;~
+2+3/\sqrt{2}-3i+3i/\sqrt{2};~
+2;~
+2+3/\sqrt{2}+3i-3i/\sqrt{2};~
+-1+3i;~\]\[
+2-3/\sqrt{2}-3i-3i/\sqrt{2})
+\]
+
+Пусть $A(x)B(x)=C(x)$. Почленно перемножив получаем $y_C$\\
+\[
+(48;~
+-9-4\sqrt{2}+ 7\sqrt{2}i-3i;~
+4-8i;~
+-9+4\sqrt{2}+7\sqrt{2}i+3i;~
+-4;~
+-5 + 7\sqrt{2}+3i-10\sqrt{2}i;~
+4+8i;~
+-5 -7\sqrt{2}-3i-10\sqrt{2}i)
+\]
+
+Далее аналогично перемножаем $a_C=\dfrac{1}{8}M_8(w^{-1})y_C = (4; 6; 6; 17; 9; 3; 3; 0)^T$
+
+\section*{Задача 3}
+Решим данную задачу, разделяя ее на каждом шаге рекурсивного спуска на две подзадачи равного размера (для этого предположим, что $n$ есть степень двойки, а затем, используя монотонность числа операций $T(n)$ и приблизив $n$ степенями двойки получим тот же результат для произвольного $n$). На каждом шаге рекурсивного подьема вычисляем произведение двух многочленов :
+\[
+T(n)=2T\left(\dfrac{n}{2}\right)+\Theta\left(\dfrac{n}{2}\log{\dfrac{n}{2}}\right)= \dfrac{n}{2}\sum_{k=0}^{\log_2{n}}{(\log{n}-k\log{2})}=\dfrac{1}{2}n\log^2{n}-\dfrac{\log{2}}{2}n	\sum_{k=0}^{\log_2{n}}{k}=\]
+\[=\dfrac{1}{2}n\log^2{n}-\dfrac{\log{2}}{2}n\log{n}(\log{n}+1)=\Theta(n\log^2{n})
+\]
+
+
+\section*{Задача 4} 
+ $F-~$матрица Фурье, $\Lambda$ есть диагональная матрица из собственных векторов циркулянтной матрицы $C$. По формуле для собственных значений матрицы $C$:\\ $\lambda_i = c_0 + c_1(w_n^i)+c_2(w_n^i)^2+\cdots+c_{n-1}(w_n^i)^{n-1}$ и $w=i$ получаем $\lambda_0 = 15, \lambda_1 = -3-6i, \lambda_2 = -5, \lambda_3 = -3+6i$\\
+$
+Cx=b \Rightarrow x = C^{-1}x
+$ .С семинара $FC=\Lambda F \Rightarrow C=F^{-1}\Lambda F \Rightarrow C^{-1}=F^{-1}\Lambda^{-1}F \Rightarrow x=F^{-1}\Lambda^{-1}Fb$, что вычислим в порядке $x=F^{-1}(\Lambda^{-1}(Fb))$ по ДПФ:
+
+\[
+x = \dfrac{1}{4}
+\begin{pmatrix}
+1&1&1&1\\
+1&-i&-1&i\\
+1&-1&1&-1\\
+1&i&-1&-i\\
+\end{pmatrix}
+\begin{pmatrix}
+\dfrac{1}{15}&0&0&0\\
+0&\dfrac{-1}{3+6i}&0&0\\
+0&0&\dfrac{-1}{5}&0\\
+0&0&0&\dfrac{1}{6i-3}\\
+\end{pmatrix}
+\begin{pmatrix}
+1&1&1&1\\
+1&i&-1&-i\\
+1&-1&1&-1\\
+1&-i&-1&i\\
+\end{pmatrix}
+\begin{pmatrix}
+16\\
+8\\
+4\\
+2\\
+\end{pmatrix}=
+\]
+\[
+= \dfrac{1}{4}
+\begin{pmatrix}
+1&1&1&1\\
+1&-i&-1&i\\
+1&-1&1&-1\\
+1&i&-1&-i\\
+\end{pmatrix}
+\begin{pmatrix}
+\dfrac{1}{15}&0&0&0\\
+0&\dfrac{-1}{3+6i}&0&0\\
+0&0&\dfrac{-1}{5}&0\\
+0&0&0&\dfrac{1}{6i-3}\\
+\end{pmatrix}
+\begin{pmatrix}
+30\\
+12+6i\\
+10\\
+12-6i\\
+\end{pmatrix}=
+\]
+\[
+=\dfrac{1}{4}
+\begin{pmatrix}
+1&1&1&1\\
+1&-i&-1&i\\
+1&-1&1&-1\\
+1&i&-1&-i\\
+\end{pmatrix}
+\begin{pmatrix}
+2\\
+(-8+6i)/5\\
+-2\\
+(-8-6i)5\\
+\end{pmatrix}=\dfrac{1}{5}
+\begin{pmatrix}
+-4\\
+8\\
+4\\
+2\\
+\end{pmatrix}
+\]
+
+\section*{Задача 5} 
+1)$
+[FFT(x)]_{i}=[Fx]_i=\sum_{k=0}^{n-1}{x_k(w_n^i)^k} = \lambda_i
+$~---~ координата вектора (равна собственному значению матрицы $circ(x)$).\\
+
+\noindent 2)$
+[FFT(y)]_{i}=[Fy]_i=\sum_{k=0}^{n-1}{y_k(w_n^i)^k} = b_i
+$ аналогично\\
+
+\noindent 3)$\Lambda = diag(\lambda_i)$;  $[FFT(x*y)]_i = [Fcirc(x)y]_i = [\Lambda Fy]_i = \lambda_i\cdot[Fy]_i = \lambda_ib_i$
+
+\section*{Задача 6}
+Транспонируем равенство $CM_n=M_n\Lambda \Rightarrow M_nC^T=\Lambda M_n$, где 
+\[
+C^T=
+\begin{pmatrix}
+c_0&c_1&c_2&\cdots&c_n\\
+c_{n}&c_0&c_1&\cdots&c_{n-1}\\
+\vdots&\vdots&\vdots&\cdots\vdots\\
+c_1&c_2&c_3&\cdots&c_0\\
+\end{pmatrix}
+\]
+В последнем равентсве вычислим первый столбец в каждом произведении соответсвенно:\\
+\[M_n(c_0, c_n, c_{n-1}, \cdots, c_1)^T = (\lambda_0, \lambda_1, \cdots, \lambda_n)^T.~~~
+F_n=\dfrac{1}{\sqrt{n+1}}M_n
+\]
+В силу того, что собственные вектора матрицы сохраняются при ее транспонировании, то утверждение доказано.\\
+
+С помощью БПФ вычисляем:
+$
+\begin{pmatrix}
+1&1&1&1\\
+1&i&-1&-i\\
+1&-1&1&-1\\
+1&-i&-1&i\\
+\end{pmatrix}
+\begin{pmatrix}
+1\\2\\4\\6\\
+\end{pmatrix}
+\begin{pmatrix}
+13\\-3-4i\\-3\\-3+4i\\
+\end{pmatrix}
+$
+\\
+\section*{Задача 7}
+Для каждого элемента $i \in A ~a_i=1$, иначе $a_i = 0$. \\
+Умножим за $O(m\log{m})~(a_1x+\cdots+a_mx^m)(a_1x+\cdots+a_mx^m) = \sum_{k=2}^{2m}{p_kx^k}$. Если коэффициент $p_k$ ненулевой, то $k \in A+A$, т.~к. $p_k \neq 0 \Rightarrow \exists a_i\neq 0, a_j\neq 0: i+j=k$, т.~е. действительно $k \in A$.\\
+
+\section*{Задача 9}
+За $O(n\log{n})$ по ДПФ найдем $\{y_k\}_{k=0}^{n-1}$, а сумму мнимых и действительных частей считаем за линейное время (один проход по вектору). В итоге, решили за $O(n\log{n})=o(n^2)$.
+
+
+
+\end{document}

@@ -1,0 +1,261 @@
+ \documentclass[a4paper,12pt]{article} % тип документа
+
+% report, book
+
+%  Русский язык
+
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+ 
+ % Цвета для гиперссылок
+\definecolor{linkcolor}{HTML}{799B03} % цвет ссылок
+\definecolor{urlcolor}{HTML}{799B03} % цвет гиперссылок
+ 
+\hypersetup{pdfstartview=FitH,  linkcolor=linkcolor,urlcolor=urlcolor, colorlinks=true}
+
+% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools} 
+
+
+\usepackage{wasysym}
+% мои добьавки-----------------------------------------
+\usepackage{ dsfont }
+\usepackage{listings}
+
+%мое----------------------------------------------------
+%Заговолок
+\author{Попов Николай}
+\title{Домашнее задание 1\LaTeX{}}
+
+%--------------------
+\usepackage{tikz}
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{document}
+
+\section*{Задача 1}
+
+(3)~Пусть $n$~---~четное число, т.е. $n = 2k $. Тогда для диофантова уравнения уравнения из условия число решений равно $ A_n = \lfloor\frac{n}{6}\rfloor - I(n~mod~6 = 0) $, где $I()$ - индикатор, равный $1$, если утверждение в скобках истинно и равный 0, если оно ложно. Такой ответ следует из того, что выбор $y$ однозначно определяет $x$ в уравнении. А число натуральных $y$, удовлетворяющих уравнению, получаем из того, что $y$ - четное. Т.е. если разбить число $n$ на шестёрки, то каждая из них выражается либо через $2x$, либо $3y$, и также учитываем, что $x $ и  $y $ не равны нулю.\\
+
+Аналогично, для нечетных $n = 2k+1$ сведением к предыдущему рассуждению  получаем $ A_n = \lfloor \frac{n - 3}{6}\rfloor - I((n-3)~mod~6 = 0) + 1$\\
+
+Обьединив эти ответы, можно записать для произвольного $ n$: число решений ранво $ A_n = \lfloor \frac{1}{6}(n - 3\cdot I(n~mod~2 = 1))\rfloor + I(n~mod~2 = 1) + I((n - 3\cdot I(n~mod~2 = 1)~mod~6 = 0 ))$  \\
+
+(2)~Из формулы для $A_n$ получаем $A_n = \theta(n)$\\
+
+(1)~Если подставлять в выражение $ 2x+3y$ всеможножные натуральные числа $x $ и $y$ (неравные нулю), то получим все $n$, удовлетворяющие условию. Тогда, т.к. при $n = 0$ задача не рассматривается, получаем
+\[
+	\sum_{n=1}^{\infty}{A_nx^n} = \sum_{x, y\in N}{x^{2x+3y}}  = \sum_{x=1}^{\infty}{x^{2x}}\sum_{y=1}^{\infty}{x^{3y}} = \dfrac{x^2}{1-x^2}\cdot\dfrac{x^3}{1-x^3} = \dfrac{x^5}{(1-x^2)(1-x^3)}
+\]
+ 
+
+\section*{Задача 2}
+
+(1)~Покажем, что $s_i \leq \frac{2}{3}s_{i-1}$\\
+Т.к. $x_i > y_i$ на каждой итерации, то $x_{i-1} = a_{i-1}y_{i-1} + x_{i-1}$~mod~$y_{i-1}$, где $a_{i-1}\geq 1$\\
+Преобразованиями получаем
+\[
+	x_{i}+y_{i} \leq \frac{2}{3}(x_{i-1}+y_{i-1}) \Leftrightarrow y_{i-1} + x_{i-1}\text{~mod~}y_{i-1}\leq \dfrac{2}{3}y_{i-1}+\frac{2}{3}x_{i-1}\Leftrightarrow \]
+
+\[\Leftrightarrow 2x_{i-1}\geq y_{i-1} + 3(x_{i-1}\text{~mod~}y_{i-1})  
+\Leftarrow x_{i-1} \geq 3(x_{i-1}\text{~mod~}y_{i-1})\Leftrightarrow\]
+\[
+	\Leftrightarrow (2a_{i-1}-1)y_{i-1} \geq x_{i-1}\text{~mod~}y_{i-1}
+\]
+Что верно, т.к. 
+$ x_{i-1}\text{~mod~}y_{i-1} < y_{i-1} \text{~и~} (2a_{i-1}-1)\geq 1$\\
+
+(2)~Т.к. $
+F_n = F_{n-1}+F_{n-2}
+$ и $F_m < F_{m+1}$, то\\
+$\gcd(F_{m+2};F_{m+1}) = \gcd(F_{m+1}+F_{m};F_{m+1}) = \gcd(F_{m+1};F_{m}) = \cdots = \gcd(F_2;F_1) = \gcd(1;1) = 1 $
+
+\section*{Задача 3}
+
+При больших $k~u_i \sim \dfrac{k}{4}$\\
+\[
+\dfrac{k^3}{4^2} < G(k) = 4G\left(\dfrac{k}{4}\right) + \dfrac{k^3}{4^2} = \dfrac{k^3}{4^2}\sum_{k=0}^{\log_{4}{k}}{\dfrac{1}{4^{2k}}}\leq \dfrac{k^3}{4^2} \sum_{k=0}^{\infty}{\dfrac{1}{4^{2k}}}
+\] 
+Т.к. последняя сумма убывающей геометрической прогрессии это константа, то получаем, что $G(k)=\Theta(k^3)$
+
+\section*{Задача 4}
+
+(1)Количество открывающих и закрывающих скобок в правильной скобочной последовательности равны, значит, $n$~---~ четное.\\
+
+Из условия на префикс получаем, что в любой скобочной последовательности, удовлетворяющей условию, есть внешняя пара скобок. В противном случае последовательность будет состоять по крайней мере из двух не вложенных друг в друга скобочных последовательностей, а значит, существует префикс, не удовлетворяющий условию.\\
+
+Число правильных скобочных последовательностей из $n-2$  скобок равно 
+$
+\frac{2}{n}\text{C}_{n-2}^{0.5n-1}
+$  \\
+
+
+\section*{Задача 5}
+Т.к. $T(n)$~---~ монотонная неотрицательная функция, то 
+\[
+	(1)~~~~~10\dfrac{n^3}{\log{n}} \leq T(n)=3T\left(\lceil\frac{n}{\sqrt{3}}\rceil-5\right)+10\dfrac{n^3}{\log{n}} \leq 3T\left(\dfrac{n}{\sqrt{3}}\right)+10\dfrac{n^3}{\log{n}}
+\]
+
+
+Для $G(n) = 3G\left(\dfrac{n}{\sqrt{3}}\right)+10\dfrac{n^3}{\log{n}}$ по мастер-теореме (вариант 3) получаем:
+\[
+	G(n)=aG\left(\dfrac{n}{b}\right)+f(n),~\log_{b}{a} = 2 < c = 2.5 ,~f(n)=\dfrac{10n^3}{\log{n}}
+\]
+Т.к. \[
+\lim_{n\rightarrow\infty}{\frac{f(n)}{n^c}} = 10\lim_{n\rightarrow\infty}{\frac{\sqrt{n}}{\log{n}}} = \lim_{n\rightarrow\infty}{\frac{n}{2\sqrt{n}}} = \infty\]
+ то $f(n) = \Omega(n^c)$ и т.к. выполнено условие регулярности:
+\[
+	\exists p < 1:~~3f\left(\frac{n}{\sqrt{3}}
+	\right) = \dfrac{10n^3}{\sqrt{3}\log{\frac{n}{\sqrt{3}}}} \leq p\cdot\dfrac{10n^3}{\log{n}} = pf(n) \text{~~при~~} n \rightarrow \infty~\Leftarrow
+\]
+
+
+\[
+\Leftarrow \exists p: 1 > p \geq \dfrac{\log{n}}{\sqrt{3}\log{\frac{n}{\sqrt{3}}}} = \dfrac{1}{\sqrt{3}}\cdot\dfrac{1}{1 - \frac{\log{\sqrt{3}}}{\log{n}}} = \dfrac{1}{\sqrt{3}} \text{~~при~~} n \rightarrow \infty
+\]
+То получаем, $G(n)=\Theta(f(n)) = \Theta\left( \dfrac{n^3}{\log{n}}\right)$. \\
+
+В силу (1) получаем $T(n) = \Theta\left( \dfrac{n^3}{\log{n}}\right)$.\\
+
+$\href{https://ru.wikipedia.org/wiki/%D0%9E%D1%81%D0%BD%D0%BE%D0%B2%D0%BD%D0%B0%D1%8F_%D1%82%D0%B5%D0%BE%D1%80%D0%B5%D0%BC%D0%B0_%D0%BE_%D1%80%D0%B5%D0%BA%D1%83%D1%80%D1%80%D0%B5%D0%BD%D1%82%D0%BD%D1%8B%D1%85_%D1%81%D0%BE%D0%BE%D1%82%D0%BD%D0%BE%D1%88%D0%B5%D0%BD%D0%B8%D1%8F%D1%85#%D0%92%D0%B0%D1%80%D0%B8%D0%B0%D0%BD%D1%82_3}{Used~Master-theorem~link}$
+
+\section*{Задача 6}
+
+\[
+T(n) = T\left(\dfrac{n}{4}\right) + T\left(\frac{3n}{4}\right) + \Theta(n)
+\]
+
+Принимая во внимание, что дерево рекурсивных вызовов данной процедуры будет неполным (т.е. с одной стороны аргумент быстрее приблизиться к константе нежели с другой), получаем оценки сверху и снизу, соответствующие высотам полных деревьев при делении аргумента на 4 и на $\dfrac{4}{3}$ соответственно:
+\[
+	n\sum_{k=0}^{\log_{4}{n}}{\left(\dfrac{1}{4}+\dfrac{3}{4}\right)^k} \leq T(n) = 1 + \left(\dfrac{1}{4}+\dfrac{3}{4}\right) + \left(\dfrac{1}{4}+\dfrac{3}{4}\right)^2 + \cdots \leq n\sum_{k=0}^{\log_{\frac{4}{3}}{n}}{\left(\dfrac{1}{4}+\dfrac{3}{4}\right)^k}
+\] 
+Отсюда получаем, что $T(n)=\Theta(n\log{n})$
+
+\section*{Задача 7}
+
+
+
+\begin{center}
+\begin{tikzpicture}[scale=0.2]
+\tikzstyle{every node}+=[inner sep=0pt]
+\draw [black] (37.9,-5.7) circle (3);
+\draw (37.9,-5.7) node {$\text{\small{S(n)}}$};
+\draw [black] (25.2,-15.6) circle (3);
+\draw (25.2,-15.6) node {$\text{\small{S(n-1)}}$};
+\draw [black] (50,-15.6) circle (3);
+\draw (50,-15.6) node {$\text{\small{S(n-3)}}$};
+\draw [black] (14.9,-27.9) circle (3);
+\draw (14.9,-27.9) node {$\text{\small{S(n-2)}}$};
+\draw [black] (37.9,-27.9) circle (3);
+\draw (37.9,-27.9) node {$\text{\small{2S(n-4)}}$};
+\draw [black] (61,-27.2) circle (3);
+\draw (61,-27.2) node {$\text{\small{S(n-6)}}$};
+\draw [black] (6,-40) circle (3);
+\draw (6,-40) node {$\text{\small{S(n-3)}}$};
+\draw [black] (25.2,-40) circle (3);
+\draw (25.2,-40) node {$\text{\small{3S(n-5)}}$};
+\draw [black] (48,-40.7) circle (3);
+\draw (48,-40.7) node {$\text{\small{3S(n-7)}}$};
+\draw [black] (69.7,-40) circle (3);
+\draw (69.7,-40) node {$\text{\small{S(n-9)}}$};
+\draw [black] (40.22,-7.6) -- (47.68,-13.7);
+\fill [black] (47.68,-13.7) -- (47.38,-12.81) -- (46.74,-13.58);
+\draw [black] (35.53,-7.54) -- (27.57,-13.76);
+\fill [black] (27.57,-13.76) -- (28.5,-13.66) -- (27.89,-12.87);
+\draw [black] (52.06,-17.78) -- (58.94,-25.02);
+\fill [black] (58.94,-25.02) -- (58.75,-24.1) -- (58.02,-24.79);
+\draw [black] (47.9,-17.74) -- (40,-25.76);
+\fill [black] (40,-25.76) -- (40.92,-25.54) -- (40.21,-24.84);
+\draw [black] (27.35,-17.69) -- (35.75,-25.81);
+\fill [black] (35.75,-25.81) -- (35.52,-24.9) -- (34.82,-25.62);
+\draw [black] (23.27,-17.9) -- (16.83,-25.6);
+\fill [black] (16.83,-25.6) -- (17.72,-25.31) -- (16.96,-24.67);
+\draw [black] (13.12,-30.32) -- (7.78,-37.58);
+\fill [black] (7.78,-37.58) -- (8.65,-37.24) -- (7.85,-36.64);
+\draw [black] (16.84,-30.18) -- (23.26,-37.72);
+\fill [black] (23.26,-37.72) -- (23.12,-36.78) -- (22.36,-37.43);
+\draw [black] (35.73,-29.97) -- (27.37,-37.93);
+\fill [black] (27.37,-37.93) -- (28.3,-37.74) -- (27.61,-37.02);
+\draw [black] (39.76,-30.26) -- (46.14,-38.34);
+\fill [black] (46.14,-38.34) -- (46.04,-37.41) -- (45.25,-38.03);
+\draw [black] (58.92,-29.36) -- (50.08,-38.54);
+\fill [black] (50.08,-38.54) -- (51,-38.31) -- (50.28,-37.62);
+\draw [black] (62.69,-29.68) -- (68.01,-37.52);
+\fill [black] (68.01,-37.52) -- (67.98,-36.58) -- (67.15,-37.14);
+\end{tikzpicture}
+\end{center}
+
+
+
+По дереву рекурсивных вызовов получаем для $N_s$~---~
+числа рекурсивных вызовов процедуры $S()$
+\[
+	\sum_{k=1}^{\frac{1}{3}(10^{12}-100)}{2^k} \leq N_s(10^{12}) \leq \sum_{k=1}^{10^{12}-100}{2^k} 
+\]
+\[
+	2^{\frac{1}{3}(10^{12}-100))+1}-2 \leq N_s(10^{12}) \leq 2^{10^{12}-99}-2
+\]
+
+\section*{Задача 9}
+При больших $n$ целая часть от аргумента не вносит вклад в асимптотику, поэтому рассмотрим:
+\[
+T(n) = nT\left(\frac{n}{2}\right) + O(n)
+\]
+Найдем нижнюю оценку нашей рекуренты, оценив рекуренту $G(n)$, равную C при маленьком аргументе:
+\[
+	G(n) = nG\left(\dfrac{n}{2}\right) =C\prod_{k=0}^{\log_{2}{n}}{\dfrac{n}{2^k}} = C\cdot \dfrac{n^{\log_{2}{n}+1}}{2^{0.5\log_{2}{n}(\log_{2}{n}+1)}} = C \cdot \dfrac{n^{\log_{2}{n}+1}}{n^{0.5(\log_{2}{n}+1})} = Cn^{0.5(\log_{2}{n}+1)}\]
+	Т.е. $G(n)=  \Theta(n^{0.5(\log_{2}{n}+1)})
+$~и $G(n) \leq T(n)~~\forall n \in N$
+
+Теперь верхнюю оценку в предположении, что $n = 2^p$:
+\[
+	T(n) = nT\left(\dfrac{n}{2}\right)  + O(n)=n\left(T\left(\dfrac{n}{2}\right)  + O(1)\right) = n\left(\dfrac{n}{2}\left(T\left(\dfrac{n}{2^2}\right)  + O(1)\right)  + O(1)\right)=
+\]
+\[
+	= O(1)n+ O(1)n\dfrac{n}{2}+O(1)n\dfrac{n}{2}\dfrac{n}{2^2}+\cdots + O(1)n\dfrac{n}{2}\dfrac{n}{2^2}\cdots\dfrac{n}{2^{\log_{2}{n}}} = \]
+\[=O(2^p) + O(2^p2^{p-1})+ O(2^p2^{p-1}2^{p-2})+\cdots+O(2^p2^{p-1}2^{p-2}\cdots2\cdot1)=
+\]
+\[
+	= O\left( 2^{0.5p(p+1)}\cdot \left( 2 + \sum_{k=1}^{p}{\dfrac{1}{2^{0.5k(k+1)}}} \right) \right) < O\left( 2^{0.5p(p+1)}\cdot \left( 2 + \sum_{k=0}^{p}{\dfrac{1}{2^{k}}} \right) \right)<
+\]
+\[
+	< O\left( 2^{0.5p(p+1)}\cdot \left( 2 + \sum_{k=1}^{\infty}{\dfrac{1}{2^{k}}} \right) \right) = O\left( 2^{0.5p(p+1)}\cdot ( 2 + 2 )\right) = O(2^{0.5p(p+1)}) 
+\]
+
+Т.к. $p = \log_{2}{n}\text{,~то~~} T(n) = O(2^{0.5\log_{2}{n}(\log_{2}{n}+1)}) = O(n^{0.5(\log_{2}{n}+1)})$
+
+В итоге, получаем, что $T(n)  = \Theta(n^{0.5(\log_{2}{n}+1)})$
+
+\section*{Задача 8}
+
+Дерево рекурсии с высотой $H$ будет несбалансированным для рекуренты (при больших $n$ пренебрегаем округлением)\\
+ $T(n) = T(n - \sqrt{n}) + T(\sqrt{n}) + \Theta(n)$\\
+ 
+ Поэтому оценим высоты самой правой и самой левой его ветвей, т.е. высоты деревьев рекурсии рекурент $(1)~~~T(n) = T(\sqrt{n}) + \Theta(n)$ и  $(2)~~~T(n) = T(n - \sqrt{n}) + \Theta(n)$\\
+ В случае $(1)$ пусть высота равна $h$:
+ \[
+	n^{\left(\frac{1}{2}\right)^h} = const \Leftrightarrow h = \frac{1}{\log{2}}(\log{\log{n}} - const)~~\text{т.е.}~~h = O(\log{\log{n}})
+ \]
+ 
+ В случае $(2)$ из того, что 
+ \[
+	\dfrac{1}{2}n \leq n - \sqrt{n} \leq 2n~\text{при больших n, то~} n - \sqrt{n} = \Theta(n)
+ \]
+ Для $H$ получили оценки сверху и снизу.\\
+\end{document}
+
